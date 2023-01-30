@@ -4,5 +4,6 @@
     "Q4.C": "cpp",
     "Q1.C": "cpp",
     "Q2.C": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }
