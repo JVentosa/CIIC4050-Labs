@@ -1,19 +1,20 @@
-//#include "ex1.h"
+// #include "ex1.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-void update(int *a, int *b){
+void update(int *a, int *b)
+{
     // TODO
-    int c = *a; 
-    *a = *a-*b;
+    int c = *a;
+    *a = *a - *b;
 
-    if ((c-*b) % 2 == 0)
+    if ((c - *b) % 2 == 0)
     {
         *b = (c) * (*b);
     }
     else
     {
-        *b = abs((*b)-(c));
+        *b = abs((*b) - (c));
     }
 }
 
