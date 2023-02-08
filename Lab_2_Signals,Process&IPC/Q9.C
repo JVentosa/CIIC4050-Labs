@@ -24,7 +24,7 @@ int main()
     {
         wait(NULL);
         printf("Parent process: Child PID = %d\n", pid);
-        exit(0)
+        exit(0);
     }
     return 0;
 }
