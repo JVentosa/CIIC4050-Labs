@@ -3,15 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-/*
-command to compile code:
-gcc -o pi pi.c -lpthread
-
-command to run code in terminal:
-100000 iterations, 4 threads
-./pi 10000 4
-*/
-
 /* this data is shared by the thread(s) */
 int threads;
 unsigned long long iterations;

@@ -6,6 +6,8 @@
 
 #include <stdlib.h>
 
+#include <windows.h>
+
 #define BUFFER_SIZE 20
 
 int count = 0, in = 0, out = 0;
@@ -28,7 +30,7 @@ void insert(int item)
 
     count++;
 
-    // sleep(1);
+    Sleep(1000);
 }
 
 int remove_item()
@@ -45,7 +47,7 @@ int remove_item()
 
     count--;
 
-    // sleep(1);
+    Sleep(1000);
 
     return item;
 }
