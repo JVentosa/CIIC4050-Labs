@@ -1,21 +1,16 @@
 #include <pthread.h>
-
 #include <semaphore.h>
-
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <windows.h>
-
 #define BUFFER_SIZE 20
 
-int count = 0, in = 0, out = 0;
-
+int in = 0;
+int out = 0;
+int count = 0;
 int buffer[BUFFER_SIZE];
 
 pthread_t tid;
-
 pthread_mutex_t mutex;
 
 void insert(int item)
@@ -23,97 +18,75 @@ void insert(int item)
 
     while (count == BUFFER_SIZE)
         ;
-
-    buffer[in] = item;
-
     in = (in + 1) % BUFFER_SIZE;
-
+    buffer[in] = item;
     count++;
 
+    printf("in: %d ", in);
     Sleep(1000);
 }
 
 int remove_item()
 {
-
     int item;
 
     while (count == 0)
         ;
-
-    item = buffer[out];
-
     out = (out + 1) % BUFFER_SIZE;
-
+    item = buffer[out];
     count--;
 
+    printf("out: %d ", out);
     Sleep(1000);
-
     return item;
 }
 
 void *producer(void *param)
 {
-
     int item;
 
     while (1)
     {
-
         item = rand() % BUFFER_SIZE;
-
         while (count >= BUFFER_SIZE)
             ;
-
         pthread_mutex_lock(&mutex);
-
         insert(item);
-
         pthread_mutex_unlock(&mutex);
-
-        printf("in: %d inserted: %d\n", in, item);
+        printf("inserted: %d\n", item);
     }
 }
 
 void *consumer(void *param)
 {
-
     int item;
-
     while (1)
     {
-
-        while (count <= 0)
-        {
-
-            pthread_mutex_lock(&mutex);
-
-            item *remove_item();
-
-            pthread_mutex_unlock(&mutex);
-
-            printf("out: %d removed: %d\n", out, item);
-        }
+        while (count == 0)
+            ;
+        pthread_mutex_lock(&mutex);
+        item = remove_item();
+        pthread_mutex_unlock(&mutex);
+        printf("removed: %d\n", item);
     }
 }
 
 int main(int argc, char *argv[])
-
 {
-
-    int producers = 2;
-
-    int consumers = 1;
+    int producers = atoi(argv[1]);
+    int consumers = atoi(argv[2]);
 
     int i;
-
+    if (pthread_mutex_init(&mutex, NULL) != 0)
+        ;
     for (i = 0; i < producers; i++)
-
+    {
         pthread_create(&tid, NULL, producer, NULL);
-
+    }
     for (i = 0; i < consumers; i++)
-
+    {
         pthread_create(&tid, NULL, consumer, NULL);
-
+    }
     pthread_join(tid, NULL);
+    pthread_mutex_destroy(&mutex);
 }
